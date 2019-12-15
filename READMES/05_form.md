@@ -7,7 +7,4 @@
   - 値は常に文字列
   - 値がない場合 **KeyError** を発生
 - views内でのurl生成: `reverse('polls:results', args=(question.id,))`
-- 
-- 
-- 
-- 
+- genericを利用した汎用ビューの活用
