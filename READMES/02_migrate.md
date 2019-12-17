@@ -28,7 +28,7 @@ python manage.py migrate
 # edit mysite/settings.py
 #   add "'polls.apps.PollsConfig'" to INSTALLED_APPS
 
-# 4. create migration files and run
+# 4. create migration files
 python manage.py makemigrations polls
 
 # 5. show sql by migrate
