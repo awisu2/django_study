@@ -86,7 +86,7 @@ python manage.py test polls
 python manage.py test polls
 
 # static css/image -----
-{% load static %}
+# {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
 ```

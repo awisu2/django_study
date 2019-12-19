@@ -1,0 +1,157 @@
+#!/bin/bash
+
+DIR=$(cd $(dirname $0); pwd)
+WORK_DIR=$(cd $DIR/..; pwd)
+
+# common methods  ==================================================
+ECHO_ESC=$(printf '\033')
+
+echo_info() {
+  echo "${ECHO_ESC}[36m$@${ECHO_ESC}[m"
+}
+
+dc=`which docker-compose`
+
+# run with echo
+_run_we() {
+  echo_info "$@"
+  "$@"
+}
+
+_cd_work() {
+  _run_we cd $WORK_DIR
+}
+
+# docker
+_dc_check() {
+  if [ -z "${dc}" ]; then
+    echo "Did you install docker-compose?"
+    exit 1
+  fi
+}
+
+_docker_command() {
+  _dc_check
+  _run_we $dc "$@"
+}
+
+docker_run_app() {
+  _cd_work
+  _docker_command run --rm app "$@"
+}
+
+docker_run_db() {
+  _cd_work
+  _docker_command run --rm db "$@"
+}
+
+docker_up() {
+  _dc_check
+  _cd_work
+  _docker_command up "$@"
+}
+
+# python
+python_venv_setup() {
+  _run_we python -m venv .venv
+  _run_we . .venv/bin/activate
+  _run_we pip install --upgrade pip
+
+  python_freeze
+
+  echo_info please exec . .venv/bin/activate
+}
+
+python_freeze() {
+  _cd_work
+  echo_info pip freeze
+  docker_run_app pip freeze > requirements.txt
+}
+
+# django
+# django_setup() {
+#   _cd_work
+#   _run_we pip install django
+# }
+
+django_manage() {
+  _cd_work
+  docker_run_app python manage.py "$@"
+}
+
+django_runserver() {
+  django_manage runserver "$@"
+}
+
+django_createapp() {
+  django_manage startapp "$@"
+}
+
+django_migrate() {
+  django_manage migrate "$@"
+}
+
+django_sqlmigrate() {
+  django_manage sqlmigrate "$@"
+}
+
+django_test() {
+  django_manage test "$@"
+}
+
+# db
+db_access() {
+  _run_we mysql -u admin -h 0.0.0.0 -p2wsxdr%tgbhu8
+}
+
+# exec  ==================================================
+HELP=`cat << 'EOF'
+Usage: $0 command
+
+Docker:
+  up                   docker-compose up
+  run_app              run app on docker-compose
+  run_db               run db on docker-compose
+
+Python:
+  freeze               pip freeze to requirements.txt
+
+Django:
+  manage [args..]      python manage.py
+  runserver [args..]   runserver (ip:port, ex: "0:8000")
+  createapp [args..]   create app
+  migrate              migrate
+  migrate_sql [args..] showsql by migrate
+  test [args..]        test
+
+Db:
+  db                   access to db
+EOF
+`
+
+cmd=$1
+shift
+case "$cmd" in
+  # docker
+  up)          docker_up "$@" ;;
+  run_app)     docker_run_app "$@" ;;
+  run_db)      docker_run_db "$@" ;;
+
+  # python
+  freeze)      python_freeze "$@" ;;
+
+  # django
+  manage)      django_manage "$@" ;;
+  runserver)   django_runserver "$@" ;;
+  createapp)   django_createapp "$@";;
+  migrate)     django_migrate "$@" ;;
+  migrate_sql) django_sqlmigrate "$@" ;;
+  test)        django_test "$@" ;;
+
+  #
+  db)          db_access "$@" ;;
+  *)
+    echo "$HELP"
+    exit 2
+  ;;
+esac
