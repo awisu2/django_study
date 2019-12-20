@@ -90,3 +90,19 @@ python manage.py test polls
 
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
 ```
+
+## for windows
+
+なんかcmd経由で実行するとホスト情報の引き渡しでエラーになるので自前実行のこと
+または、別のスクリプト経由にすべし
+
+```cmd
+SET DATABASE_ENGINE=django.db.backends.mysql
+SET DATABASE_HOST=192.168.99.100
+SET DATABASE_PORT=3306
+SET DATABASE_NAME=django_study
+SET DATABASE_USER=admin
+SET DATABASE_PASSWORD=2wsxdr%tgbhu8
+
+python manage.py runserver
+```
