@@ -103,6 +103,15 @@ django_test() {
   django_manage test "$@"
 }
 
+django_shell() {
+  django_manage shell "$@"
+}
+
+django_collectstatic() {
+  django_manage collectstatic "$@"
+}
+
+
 # db
 db_access() {
   _run_we mysql -u admin -h 0.0.0.0 -p2wsxdr%tgbhu8
@@ -128,7 +137,8 @@ Django:
   migrate              migrate
   migrate_sql [args..] showsql by migrate
   test [args..]        test
-  cli [args..]         run django command
+  shell                django shell
+  collectstatic        django collectstatic static配下のファイルを収集 (for prod)
 
 Db:
   db                   access to db
@@ -147,16 +157,18 @@ case "$cmd" in
   freeze)      python_freeze "$@" ;;
 
   # django
-  manage)      django_manage "$@" ;;
-  manage_help) django_help "$@" ;;
-  runserver)   django_runserver "$@" ;;
-  createapp)   django_createapp "$@";;
-  migrate)     django_migrate "$@" ;;
-  migrate_sql) django_sqlmigrate "$@" ;;
-  test)        django_test "$@" ;;
-  help)        django_help "$@" ;;
+  manage)        django_manage "$@" ;;
+  manage_help)   django_help "$@" ;;
+  runserver)     django_runserver "$@" ;;
+  createapp)     django_createapp "$@";;
+  migrate)       django_migrate "$@" ;;
+  migrate_sql)   django_sqlmigrate "$@" ;;
+  test)          django_test "$@" ;;
+  help)          django_help "$@" ;;
+  shell)         django_shell "$@" ;;
+  collectstatic) django_collectstatic "$@" ;;
 
-  #
+  # db
   db)          db_access "$@" ;;
   *)
     echo "$HELP"
