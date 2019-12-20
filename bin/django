@@ -48,6 +48,7 @@ docker_run_db() {
 docker_up() {
   _dc_check
   _cd_work
+  _docker_command stop "$@"
   _docker_command up "$@"
 }
 
@@ -75,8 +76,11 @@ python_freeze() {
 # }
 
 django_manage() {
-  _cd_work
   docker_run_app python manage.py "$@"
+}
+
+django_help() {
+  django_manage help "$@"
 }
 
 django_runserver() {
@@ -118,11 +122,13 @@ Python:
 
 Django:
   manage [args..]      python manage.py
+  manage_help [args..] help for django manage.py
   runserver [args..]   runserver (ip:port, ex: "0:8000")
   createapp [args..]   create app
   migrate              migrate
   migrate_sql [args..] showsql by migrate
   test [args..]        test
+  cli [args..]         run django command
 
 Db:
   db                   access to db
@@ -142,11 +148,13 @@ case "$cmd" in
 
   # django
   manage)      django_manage "$@" ;;
+  manage_help) django_help "$@" ;;
   runserver)   django_runserver "$@" ;;
   createapp)   django_createapp "$@";;
   migrate)     django_migrate "$@" ;;
   migrate_sql) django_sqlmigrate "$@" ;;
   test)        django_test "$@" ;;
+  help)        django_help "$@" ;;
 
   #
   db)          db_access "$@" ;;

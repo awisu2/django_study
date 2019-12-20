@@ -18,6 +18,9 @@ services:
       DATABASE_NAME: django_study
       DATABASE_USER: admin
       DATABASE_PASSWORD: 2wsxdr%tgbhu8
+      SECRET_KEY: 7j1=$$p)@db9hsihu3plz5drzkkb2pfw0kz&o*bqn#4o0s!bh#c
+      DJANGO_DEBUG: 'Trueg'
+      ALLOWED_HOSTS: '*'
     command: >
       dockerize -wait tcp://db:3306 -timeout 5m -wait-retry-interval 5s bash -c "
       python manage.py runserver 0.0.0.0:8000"
