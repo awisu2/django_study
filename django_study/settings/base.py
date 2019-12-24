@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from os import getenv
+import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -111,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True
 
@@ -128,3 +129,48 @@ STATIC_URL = '/static/'
 
 # collectstatic コマンドの収集先ディレクトリ
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+# loggin
+LOGGING = {
+    'version': 1,   # これを設定しないと怒られる
+    'formatters': { # 出力フォーマットを文字列形式で指定する
+        'all': {    # 出力フォーマットに`all`という名前をつける
+            'format': '\t'.join([
+                "[%(levelname)s]",
+                "asctime:%(asctime)s",
+                "module:%(module)s",
+                "message:%(message)s",
+                "process:%(process)d",
+                "thread:%(thread)d",
+            ])
+        },
+        'console': {    # 出力フォーマットに`all`という名前をつける
+            'format': ' '.join([
+                "[%(levelname)s]",
+                "%(asctime)s",
+                "[%(module)s]",
+                "%(message)s",
+            ])
+        },
+    },
+    'handlers': {  # ログをどこに出すかの設定
+        'file': {  # どこに出すかの設定に名前をつける `file`という名前をつけている
+            'level': 'DEBUG',  # DEBUG以上のログを取り扱うという意味
+            'class': 'logging.FileHandler',  # ログを出力するためのクラスを指定
+            'filename': os.path.join(BASE_DIR, 'logs/' + datetime.date.today().strftime('%Y%m%d') + '.log'),  # どこに出すか
+            'formatter': 'all',  # どの出力フォーマットで出すかを名前で指定
+        },
+        'console': { # どこに出すかの設定をもう一つ、こちらの設定には`console`という名前
+            'level': 'DEBUG',
+            # こちらは標準出力に出してくれるクラスを指定
+            'class': 'logging.StreamHandler', 
+            'formatter': 'console'
+        },
+    },
+    'loggers': {  # どんなloggerがあるかを設定する
+        'common': {  # commandという名前のloggerを定義
+            'handlers': ['file', 'console'],  # 先述のfile, consoleの設定で出力
+            'level': 'DEBUG',
+        },
+    },
+}

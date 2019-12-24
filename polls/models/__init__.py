@@ -1,1 +1,1 @@
-from .models import Question, Choice
+from .models import *
