@@ -169,8 +169,12 @@ LOGGING = {
     },
     'loggers': {  # どんなloggerがあるかを設定する
         'common': {  # commandという名前のloggerを定義
-            'handlers': ['file', 'console'],  # 先述のfile, consoleの設定で出力
+            'handlers': ['file',],  # 先述のfile, consoleの設定で出力
             'level': 'DEBUG',
+        },
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
         },
     },
 }

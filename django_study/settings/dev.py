@@ -1,6 +1,6 @@
 from .base import *
 
-print ('dev')
+print('load settings/dev.py')
 
 INTERNAL_IPS = ['172.0.0.1']
 INSTALLED_APPS += ['debug_toolbar']
@@ -19,6 +19,7 @@ DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.logging.LoggingPanel',
     'debug_toolbar.panels.redirects.RedirectsPanel',
 ]
+
 def show_toolbar(request):
         return True
 

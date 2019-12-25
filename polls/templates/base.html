@@ -1,5 +1,5 @@
 {% load static %}<!DOCTYPE html>
-<html lang="en">
+<html lang="jp">
 <head>
     <title>{% block title %}My amazing site{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
@@ -10,7 +10,7 @@
         {% block sidebar %}
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/blog/">Blog</a></li>
+            <li><a href="{% url 'polls:related_check' %}">related_check</a></li>
         </ul>
         {% endblock %}
     </div>
