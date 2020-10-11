@@ -35,7 +35,7 @@
 
 ### 特殊処理：本番プロジェクトではは不要
 
-`mv django_study _tmp && mv -f _tmp/* ./`
+`mv django_study _tmp && mv -f _tmp/* ./ && rm -rf _tmp`
 
 この勉強ではパスがずれると進めずらいので無理やり中身を移動
 
