@@ -4,18 +4,18 @@
 - [02_migrate](READMES/02_migrate.md)
 - [03_admin](READMES/03_admin.md)
 
-## 準備
+## install
 
 - python3 以上
 - vscode 推奨
+- windows の場合
+  - bash 系のターミナルを前提としています。(Git Bash で十分)
+- bin/util で、各種コマンド入力の自動化をしています
+  - 一度 `bin/util` を実行してみてください
 
-## hands up
+### 初期設定
 
-### venv で環境準備
-
-```bash
-pip -m venv .venv
-```
+`bni/util setup`
 
 ## links
 

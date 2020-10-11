@@ -1,0 +1,57 @@
+#!/bin/bash
+
+DIR=$(cd $(dirname $0); pwd)
+WORK_DIR="$(cd $DIR/..; pwd)"
+
+. "${DIR}/common.sh"
+
+# methods ==================================================
+sample() {
+  # データが存在するとき
+  if [ -n "$1" ]; then
+    echo_info "$@"
+  else
+    run_with_echo analyze_os
+    echo_info "no args. sample echo OS: $OS"
+  fi
+
+  cd_work_dir
+  run_with_echo pwd
+}
+
+cd_work_dir() {
+  run_with_echo cd $WORK_DIR
+}
+
+create_venv() {
+  cd_work_dir
+  if [ ! -d ".venv" ]; then
+    run_with_echo python -m venv .venv
+    echo_info please run '"source .venv/Scripts/activate"'
+  fi
+}
+
+pip_install() {
+  python -m pip 
+}
+
+# exec  ==================================================
+HELP=`cat << 'EOF'
+Usage: $0 command
+
+Commands:
+  setup: setup venv
+EOF
+`
+
+cmd=$1
+shift
+case "$cmd" in
+  # sample
+  setup)  create_venv ;;
+
+  *)
+    echo "$HELP"
+    exit 2
+  ;;
+esac
