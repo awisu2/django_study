@@ -20,14 +20,14 @@
 
 ## 1. 初期設定
 
-`bni/util setup`
+`bin/util setup`
 
 - venv の作成
 - Django や必要パッケージのインストール
 
 ## 2. project の作成
 
-`bni/util create_project django_study`
+`bin/util create_project django_study`
 
 - プロジェクトの作成
 - 新しいプロジェクトは新規ディレクトリで作成される
