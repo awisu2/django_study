@@ -43,27 +43,46 @@ pip_install() {
   run_with_echo pip freeze
 }
 
+create_project() {
+  _NAME="$1"
+  if [ "$_NAME" == "" ]; then
+    echo_warn no project name
+    echo_help
+    exit 1
+  fi
+
+  echo_warn django-admin startproject $_NAME .
+
+  (cd $_NAME && find . )
+}
+
 # exec  ==================================================
 HELP=`cat << 'EOF'
 Usage: $0 command
 
 Commands:
-  setup             : setup venv
+  setup                         : setup venv
+  create_project {project name} : create_project
 
 Python:
-  pip_install [arg] : pip install specific package. (defaul=requirements.txt)
+  pip_install [packge]  : pip install specific package. (defaul=requirements.txt)
 
 EOF
 `
+echo_help() {
+  echo "$HELP"
+}
 
 cmd=$1
 shift
 case "$cmd" in
   setup)  create_venv && pip_install ;;
+  create_project) create_project "$@" ;;
+
   pip_install)  pip_install "$@" ;;
 
   *)
-    echo "$HELP"
+    echo_help
     exit 2
   ;;
 esac
