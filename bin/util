@@ -33,7 +33,13 @@ create_venv() {
 
 pip_install() {
   run_with_echo python -m pip install -U pip
-  run_with_echo pip install -r requirements.txt
+
+  if [ -n "$1" ]; then
+    run_with_echo pip install -U "$1"
+  else
+    run_with_echo pip install -U -r requirements.txt
+  fi
+
   run_with_echo pip freeze
 }
 
@@ -42,15 +48,19 @@ HELP=`cat << 'EOF'
 Usage: $0 command
 
 Commands:
-  setup: setup venv
+  setup             : setup venv
+
+Python:
+  pip_install [arg] : pip install specific package. (defaul=requirements.txt)
+
 EOF
 `
 
 cmd=$1
 shift
 case "$cmd" in
-  # sample
   setup)  create_venv && pip_install ;;
+  pip_install)  pip_install "$@" ;;
 
   *)
     echo "$HELP"
