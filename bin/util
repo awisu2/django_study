@@ -82,14 +82,14 @@ Usage: $0 command
 Commands:
   setup                         : setup venv
   create_project {project name} : create_project
-  runserver                     : start django server
   start_app {application name}  : create new django application
 
 Python:
   pip_install [packge]  : pip install specific package. (defaul=requirements.txt)
 
 Django:
-
+  runserver             : start django server
+  manage [args]         : run django manage.py
 EOF
 `
 echo_help() {
@@ -99,12 +99,17 @@ echo_help() {
 cmd=$1
 shift
 case "$cmd" in
+  # command
   setup)  create_venv && pip_install ;;
   create_project) create_project "$@" ;;
-  runserver) django_runserver "$@" ;;
   start_app) django_start_app "$@" ;;
 
+  # python
   pip_install)  pip_install "$@" ;;
+
+  # django
+  runserver) django_runserver "$@" ;;
+  manage) django_manage "$@" ;;
 
   *)
     echo_help
