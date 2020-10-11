@@ -43,99 +43,11 @@
 
 `bin/util start`
 
-## tips
+http://127.0.0.1:8000/
 
-- pip update: `python -m pip install -U pip`
-- venv for windows: `.venv\Scripts\activate.bat`
-- mysql を利用する場合、version3 あたりから mysqlclient が推奨されるようになった。pymysql は非推奨になった。
-  - windows だと、python3.7 までなら`pip instal`できるが、それ以上はエラー(2020-10-11 確認)
-- version: `django-admin --version`
-- controller という名前でなく view
-  - [] view 一つ、model 一つのチュートリアルだったので、もっと機能を追加する場合、新しく app を追加なのか、それともファイルを増やす方法があるのか知りたい
+### 4. アプリケーションの作成
 
-## 簡易スタートまとめ
+実際の機能を持ったコードを書く場所を作成します
+※ ここまでで作成したのはプロジェクト(機能の枠組み)で中身が空のためこの作業が必要です
 
-```bash
-# create project -----
-django-admin startproject django_study
-cd django_study
-
-# ★run
-# option "ip:port"
-python manage.py runserver 0:8000
-
-# create app -----
-python manage.py startapp polls
-# edit
-# polls/vies.py
-# polls/urls.py
-# django_study/urls.py
-
-
-# database setting -----
-# mysqlclient recommend by public. pyMySql can't use.
-pip install mysqlclient
-
-# mysite/settings.py
-# [optional] change DATABASES.default(with install driver)
-
-# migrate
-python manage.py migrate
-
-# create model
-# edit polls/models.py
-# edit mysite/settings.py
-#   add "'polls.apps.PollsConfig'" to INSTALLED_APPS
-
-# ★create migration files
-python manage.py makemigrations polls
-
-# show sql by migrate
-python manage.py sqlmigrate polls 0001
-
-# ★migrate
-python manage.py migrate
-
-# admin ----------
-python manage.py createsuperuser
-## admin, pass
-# access to http://127.0.0.1:8000/admin/
-
-# add view ----------
-# edit polls/views.py
-# edit polls/urls.py
-
-# show http://localhost:8000/polls/34/
-
-# test -----
-# cretat test
-# edit polls/tests.py
-
-# run test
-python manage.py test polls
-
-# modify code
-# edit polls/models.py
-python manage.py test polls
-
-# static css/image -----
-# {% load static %}
-
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
-```
-
-## for windows
-
-なんか cmd 経由で実行するとホスト情報の引き渡しでエラーになるので自前実行のこと
-または、別のスクリプト経由にすべし
-
-```cmd
-SET DATABASE_ENGINE=django.db.backends.mysql
-SET DATABASE_HOST=192.168.99.100
-SET DATABASE_PORT=3306
-SET DATABASE_NAME=django_study
-SET DATABASE_USER=admin
-SET DATABASE_PASSWORD=2wsxdr%tgbhu8
-
-python manage.py runserver
-```
+`bin/util start_app task`

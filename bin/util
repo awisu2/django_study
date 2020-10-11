@@ -56,8 +56,23 @@ create_project() {
   (cd $_NAME && find . )
 }
 
-django_start() {
-  run_with_echo python manage.py runserver "$@"
+django_manage() {
+  run_with_echo python manage.py "$@"
+}
+
+django_runserver() {
+  django_manage runserver "$@"
+}
+
+django_start_app() {
+  _NAME="$1"
+  if [ "$_NAME" == "" ]; then
+    echo_warn no application name
+    echo_help
+    exit 1
+  fi
+
+  django_manage startapp "$@"
 }
 
 # exec  ==================================================
@@ -67,10 +82,13 @@ Usage: $0 command
 Commands:
   setup                         : setup venv
   create_project {project name} : create_project
-  start                         : start django server
+  runserver                     : start django server
+  start_app {application name}  : create new django application
 
 Python:
   pip_install [packge]  : pip install specific package. (defaul=requirements.txt)
+
+Django:
 
 EOF
 `
@@ -83,7 +101,8 @@ shift
 case "$cmd" in
   setup)  create_venv && pip_install ;;
   create_project) create_project "$@" ;;
-  start) django_start "$@" ;;
+  runserver) django_runserver "$@" ;;
+  start_app) django_start_app "$@" ;;
 
   pip_install)  pip_install "$@" ;;
 
