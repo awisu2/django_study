@@ -4,21 +4,35 @@
 - [02_migrate](READMES/02_migrate.md)
 - [03_admin](READMES/03_admin.md)
 
+## 準備
+
+- python3 以上
+- vscode 推奨
+
+## hands up
+
+### venv で環境準備
+
+```bash
+pip -m venv .venv
+```
+
 ## links
 
 - ことはじめ
-  - [Djangoでの開発 ダイジェスト \- Qiita](https://qiita.com/zaburo/items/0e15f6c150caa13ca34c)
-- 増殖するmodelsやviewsを分割する
-  - [Djangoでモジュールを複数ファイルで構成する \- Qiita](https://qiita.com/RyoMa_0923/items/c4ca5bd070e823403fdf)
+  - [Django での開発 ダイジェスト \- Qiita](https://qiita.com/zaburo/items/0e15f6c150caa13ca34c)
+- 増殖する models や views を分割する
+  - [Django でモジュールを複数ファイルで構成する \- Qiita](https://qiita.com/RyoMa_0923/items/c4ca5bd070e823403fdf)
 
 ## tips
 
 - pip update: `python -m pip install -U pip`
 - venv for windows: `.venv\Scripts\activate.bat`
-- mysqlを利用する場合、version3あたりからmysqlclientが推奨されるようになった。pymysqlは非推奨になり
+- mysql を利用する場合、version3 あたりから mysqlclient が推奨されるようになった。pymysql は非推奨になった。
+  - windows だと、python3.7 までなら`pip instal`できるが、それ以上はエラー(2020-10-11 確認)
 - version: `django-admin --version`
-- controllerという名前でなくview
-  - [] view一つ、model一つのチュートリアルだったので、もっと機能を追加する場合、新しくappを追加なのか、それともファイルを増やす方法があるのか知りたい
+- controller という名前でなく view
+  - [] view 一つ、model 一つのチュートリアルだったので、もっと機能を追加する場合、新しく app を追加なのか、それともファイルを増やす方法があるのか知りたい
 
 ## 簡易スタートまとめ
 
@@ -93,7 +107,7 @@ python manage.py test polls
 
 ## for windows
 
-なんかcmd経由で実行するとホスト情報の引き渡しでエラーになるので自前実行のこと
+なんか cmd 経由で実行するとホスト情報の引き渡しでエラーになるので自前実行のこと
 または、別のスクリプト経由にすべし
 
 ```cmd

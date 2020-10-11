@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    // python
+    "ms-python.vscode-pylance",
+    "ms-python.python",
+    "njpwerner.autodocstring",
+    "oderwat.indent-rainbow",
+    // markdown
+    "davidanson.vscode-markdownlint",
+    // file format(markdown and like html, css)
+    "esbenp.prettier-vscode"
+  ]
+}
