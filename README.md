@@ -12,17 +12,20 @@
   - bash 系のターミナルを前提としています。(Git Bash で十分)
 - bin/util で、各種コマンド入力の自動化をしています
   - 一度 `bin/util` を実行してみてください
+  - 実行時にどんなコマンドが実行されているかはなるべく出力するようにしています
 
 ### 初期設定
 
 `bni/util setup`
 
+以下の処理を行います。
+
+- venv の作成
+- Django や必要パッケージのインストール
+
 ## links
 
-- ことはじめ
-  - [Django での開発 ダイジェスト \- Qiita](https://qiita.com/zaburo/items/0e15f6c150caa13ca34c)
-- 増殖する models や views を分割する
-  - [Django でモジュールを複数ファイルで構成する \- Qiita](https://qiita.com/RyoMa_0923/items/c4ca5bd070e823403fdf)
+- [はじめての Django アプリ作成、その 1 \| Django ドキュメント \| Django](https://docs.djangoproject.com/ja/3.0/intro/tutorial01/)
 
 ## tips
 

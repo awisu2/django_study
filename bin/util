@@ -27,12 +27,14 @@ create_venv() {
   cd_work_dir
   if [ ! -d ".venv" ]; then
     run_with_echo python -m venv .venv
-    echo_info please run '"source .venv/Scripts/activate"'
   fi
+  run_with_echo source .venv/Scripts/activate
 }
 
 pip_install() {
-  python -m pip 
+  run_with_echo python -m pip install -U pip
+  run_with_echo pip install -r requirements.txt
+  run_with_echo pip freeze
 }
 
 # exec  ==================================================
@@ -48,7 +50,7 @@ cmd=$1
 shift
 case "$cmd" in
   # sample
-  setup)  create_venv ;;
+  setup)  create_venv && pip_install ;;
 
   *)
     echo "$HELP"
