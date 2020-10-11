@@ -51,9 +51,13 @@ create_project() {
     exit 1
   fi
 
-  echo_warn django-admin startproject $_NAME .
+  run_with_echo django-admin startproject $_NAME
 
   (cd $_NAME && find . )
+}
+
+django_start() {
+  run_with_echo python manage.py runserver "$@"
 }
 
 # exec  ==================================================
@@ -63,6 +67,7 @@ Usage: $0 command
 Commands:
   setup                         : setup venv
   create_project {project name} : create_project
+  start                         : start django server
 
 Python:
   pip_install [packge]  : pip install specific package. (defaul=requirements.txt)
@@ -78,6 +83,7 @@ shift
 case "$cmd" in
   setup)  create_venv && pip_install ;;
   create_project) create_project "$@" ;;
+  start) django_start "$@" ;;
 
   pip_install)  pip_install "$@" ;;
 

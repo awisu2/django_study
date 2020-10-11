@@ -14,18 +14,34 @@
   - 一度 `bin/util` を実行してみてください
   - 実行時にどんなコマンドが実行されているかはなるべく出力するようにしています
 
-### 初期設定
+## 参考 links
+
+- [はじめての Django アプリ作成、その 1 \| Django ドキュメント \| Django](https://docs.djangoproject.com/ja/3.0/intro/tutorial01/)
+
+## 1. 初期設定
 
 `bni/util setup`
-
-以下の処理を行います。
 
 - venv の作成
 - Django や必要パッケージのインストール
 
-## links
+## 2. project の作成
 
-- [はじめての Django アプリ作成、その 1 \| Django ドキュメント \| Django](https://docs.djangoproject.com/ja/3.0/intro/tutorial01/)
+`bni/util create_project django_study`
+
+- プロジェクトの作成
+- 新しいプロジェクトは新規ディレクトリで作成される
+- django_study の部分はプロジェクト名、好きな名前をどうぞ
+
+### 特殊処理：本番プロジェクトではは不要
+
+`mv django_study _tmp && mv -f _tmp/* ./`
+
+この勉強ではパスがずれると進めずらいので無理やり中身を移動
+
+## 3. サーバ起動
+
+`bin/util start`
 
 ## tips
 
