@@ -11,8 +11,14 @@ class Task(ExModel):
     name: str = models.CharField(max_length=200)
     pub_date: datetime = models.DateTimeField("date published")
 
+    def __str__(self) -> str:
+        return f"{self.id}: {self.name}"
+
 
 class Note(ExModel):
     # taskに紐付いている
     task: int = models.ForeignKey(Task, on_delete=models.CASCADE)
     note: str = models.TextField(blank=True, default="")
+
+    def __str__(self) -> str:
+        return f"{self.id}: {self.note}"

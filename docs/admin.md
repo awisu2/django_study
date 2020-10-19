@@ -6,16 +6,25 @@ django による GUI で database の管理を行うことができます
 
 ## install
 
-admin を利用する際は INSTALLED_APPS にデフォルトで設定されているものほぼすべてが必要です。(設定をいじらなければそのままで OK です)
+- INSTALLED_APPS はデフォルト設定でほぼ全て必要
+- migrate してあること
+- admin ユーザでないとアクセスできない
+  - `bin/util manage createsuperuser`
+- http://127.0.0.1:8000/admin
 
-その上で migrate されている必要があります
+### 特定の Model を admin で扱えるように登録する
 
-## 特定のアプリを admin で編集できるようにする
+**{app}/admin.py**
 
 ```py
 from django.contrib import admin
 
-from .models import Question
+from .models import Foo, Bar
 
-admin.site.register(Question)
+admin.site.register(Foo)
+admin.site.register(Bar)
 ```
+
+## かんたん Tips
+
+- Model の `__str__`の返却値が admin 画面での各レコードの表示
