@@ -1,5 +1,5 @@
 {
-  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
 
   "python.venvPath": ".venv",
   "python.pythonPath": ".venv\\Scripts\\python.exe",
@@ -20,4 +20,20 @@
   "prettier.semi": false,
   "prettier.singleQuote": true,
 
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "html.format.endWithNewline": true,
+  "html.format.indentInnerHtml": false,
+  "html.format.maxPreserveNewLines": 1,
+  "html.format.wrapAttributes": "auto",
+  "html.format.wrapLineLength": 88,
+  "html.format.preserveNewLines": true,
+
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": false,
+    // prettierを対象から外す
+    "editor.defaultFormatter": "vscode.markdown-language-features"
+  }
 }

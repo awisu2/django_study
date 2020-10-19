@@ -1,0 +1,118 @@
+#!/bin/bash
+
+DIR=$(cd $(dirname $0); pwd)
+WORK_DIR="$(cd $DIR/..; pwd)"
+
+. "${DIR}/common.sh"
+
+# methods ==================================================
+sample() {
+  # データが存在するとき
+  if [ -n "$1" ]; then
+    echo_info "$@"
+  else
+    run_with_echo analyze_os
+    echo_info "no args. sample echo OS: $OS"
+  fi
+
+  cd_work_dir
+  run_with_echo pwd
+}
+
+cd_work_dir() {
+  run_with_echo cd $WORK_DIR
+}
+
+create_venv() {
+  cd_work_dir
+  if [ ! -d ".venv" ]; then
+    run_with_echo python -m venv .venv
+  fi
+  run_with_echo source .venv/Scripts/activate
+}
+
+pip_install() {
+  run_with_echo python -m pip install -U pip
+
+  if [ -n "$1" ]; then
+    run_with_echo pip install -U "$1"
+  else
+    run_with_echo pip install -U -r requirements.txt
+  fi
+
+  run_with_echo pip freeze
+}
+
+create_project() {
+  _NAME="$1"
+  if [ "$_NAME" == "" ]; then
+    echo_warn no project name
+    echo_help
+    exit 1
+  fi
+
+  run_with_echo django-admin startproject $_NAME
+
+  (cd $_NAME && find . )
+}
+
+django_manage() {
+  run_with_echo python manage.py "$@"
+}
+
+django_runserver() {
+  django_manage runserver "$@"
+}
+
+django_start_app() {
+  _NAME="$1"
+  if [ "$_NAME" == "" ]; then
+    echo_warn no application name
+    echo_help
+    exit 1
+  fi
+
+  django_manage startapp "$@"
+}
+
+# exec  ==================================================
+HELP=`cat << 'EOF'
+Usage: $0 command
+
+Commands:
+  setup                         : setup venv
+  create_project {project name} : create_project
+  start_app {application name}  : create new django application
+
+Python:
+  pip_install [packge]  : pip install specific package. (defaul=requirements.txt)
+
+Django:
+  runserver             : start django server
+  manage [args]         : run django manage.py
+EOF
+`
+echo_help() {
+  echo "$HELP"
+}
+
+cmd=$1
+shift
+case "$cmd" in
+  # command
+  setup)  create_venv && pip_install ;;
+  create_project) create_project "$@" ;;
+  start_app) django_start_app "$@" ;;
+
+  # python
+  pip_install)  pip_install "$@" ;;
+
+  # django
+  runserver) django_runserver "$@" ;;
+  manage) django_manage "$@" ;;
+
+  *)
+    echo_help
+    exit 2
+  ;;
+esac
