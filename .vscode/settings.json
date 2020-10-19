@@ -29,4 +29,11 @@
   "html.format.wrapAttributes": "auto",
   "html.format.wrapLineLength": 88,
   "html.format.preserveNewLines": true,
+
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": false,
+    // prettierを対象から外す
+    "editor.defaultFormatter": "vscode.markdown-language-features"
+  }
 }
