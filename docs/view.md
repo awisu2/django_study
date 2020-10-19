@@ -37,7 +37,8 @@ class ListView(generic.ListView):
     model = Task
     # テンプレート名(default: `{model}_list.html`)
     template_name = "tasks/list.html"
-    # テンプレートでのコンテキスト名(default: 'object_list')
+    # テンプレートでのコンテキスト名(default: 'object_list' と `{model}_list`)
+    # 変更するわけではなくて追加する
     context_object_name = "rows"
     # ページング: `paginate_by={num}`
     paginate_by = 100
@@ -47,7 +48,7 @@ class ListView(generic.ListView):
     def get_queryset(self):
         return self.model.objects.all()
 
-    # get_query_setの結果を取得し
+    # viewにわたすパラメータをカスタマイズ
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["object_list"] = context["object_list"]
@@ -61,6 +62,8 @@ class ListView(generic.ListView):
 最低限 model だけセットしておけば、template の表示まで行ってくれる
 
 - template のデフォルト名: `{model}_detail.html`
+- url からのパラメータ渡しは pk である必要がある
+  - ex: `path('task/<int:pk>', views.DetailView.as_view(), name="task_detail")`
 
 ```py
 class ListView(generic.DetailView):
