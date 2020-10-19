@@ -25,6 +25,6 @@ admin.site.register(Foo)
 admin.site.register(Bar)
 ```
 
-## かんたん Tips
+## tips
 
 - Model の `__str__`の返却値が admin 画面での各レコードの表示

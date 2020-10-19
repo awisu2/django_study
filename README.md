@@ -39,34 +39,34 @@
 
 `bin/util start`
 
-http://127.0.0.1:8000/
+http://127.0.0.1:8000/ にアクセスすると django のデフォルト画面が表示されます。
 
-### 4. アプリケーションの作成
+## 4. アプリケーションの作成
 
 実際の機能を持ったコードを書く場所を作成します
-※ ここまでで作成したのはプロジェクト(機能の枠組み)で中身が空のためこの作業が必要です
+※ ここまでで作成したのはプロジェクト(機能の枠組み)で中身が空のためこの作業が必要です。細かい話は[こちら](./docs/application.md)
 
 link: [はじめての Django アプリ作成、その 1 \| Django ドキュメント \| Django](https://docs.djangoproject.com/ja/3.0/intro/tutorial01/#creating-the-polls-app)
 
 `bin/util start_app tasks`
 
-#### コードの実装
+### コードの実装
 
 詳細は、link を見てください
 
-1. 表示内容の作成: task/vies.py, task/urls.py を修正
-   - vies.py: 実際に表示したい内容
+1. 表示内容の作成: task/views.py, task/urls.py を修正
+   - views.py: 実際に表示したい内容
    - urls.py: どんな uri で呼び出せるかの設定
 2. プロジェクトと連結: django_study/urls.py を修正
    - 同じ方法で、新しいタスクを増やしていけば、それぞれに連結できます
 
-### 5. データベース
+## 5. データベース
 
 - Database: デフォルトでは sqlite3 が設定されています(とりあえず動かすだけなら、十分)
   - sqlite 以外が必要な場合はこちらのドキュメントをお読みください
     - [はじめての Django アプリ作成、その 2 \| Django ドキュメント \| Django](https://docs.djangoproject.com/ja/3.0/intro/tutorial02/#database-setup)
 
-#### ファイルを更新/追記
+### ファイルを更新/追記
 
 _tasks/models.py_
 
@@ -98,9 +98,9 @@ INSTALLED_APPS = [
 ]
 ```
 
-note: django は python manage.py を基準に実行されますが、このときどれを対象とするかの設定が INSTALLED_APPS で行われています。
+\*NOTE: django は python manage.py を基準に実行されますが、実行時の対象アプリを INSTALLED_APPS で指定しています。
 
-#### 確認とテーブル作成
+### 確認とテーブル作成
 
 現在の migration 状況を確認
 
@@ -120,4 +120,64 @@ bin/util manage migrate tasks 0001
 
 # migrateの結果を確認([x]になっています)
 bin/util manage showmigrations tasks
+```
+
+## 6. 実際に画面(ブラウザ)で見る
+
+### 管理画面で見る
+
+デフォルトで用意されている管理画面では、表示、更新/追加、削除がかんたんにできます。
+
+[admin.md](docs/admin.md)
+
+### 自作 view で見る
+
+#### 1. 必要ファイルの作成
+
+tasks/views.py
+
+```py
+from django.http import HttpResponse
+from django.template import loader
+
+from .models import Task
+
+
+def index(request):
+
+    tasks = Task.objects.all()
+    template = loader.get_template("tasks/index.html")
+
+    context = {"message": "hello world !", "tasks": tasks}
+    return HttpResponse(template.render(context, request))
+```
+
+tasks/templates/tasks/index.html
+
+\*NOTE:なぜ tasks ディレクトリを２重にしているかは別項
+
+```html
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    {% if message %}
+    <p>{{message}}</p>
+    {% endif %} {% if tasks %}
+
+    <ul>
+      {% for task in tasks %}
+      <li>{{task}}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>データの登録がありません</p>
+    {% endif %}
+  </body>
+</html>
 ```

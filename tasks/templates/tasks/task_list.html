@@ -8,15 +8,20 @@
 </head>
 
 <body>
+  <a href="{% url 'tasks:index' %}">index</a>
   {% if message %}
   <p>{{message}}</p>
   {% endif %}
-  {% if tasks %}
 
+  {% if object_list %}
   <ul>
-    {% for task in tasks %}<li>{{task}}</li>{% endfor %}
+    {% for row in object_list %}
+    <li><a href="{% url 'tasks:detail' row.id %}">{{row}}</a></li>
+    {% endfor %}
   </ul>
-  {% else %}<p>データの登録が<span>hogera</span>ありません</p>{% endif %}
+  {% else %}
+  <p>データの登録がありません</p>
+  {% endif %}
 
 </body>
 
