@@ -30,6 +30,15 @@ static をロードする
 
 ## base タグを読み込む
 
+extendsによって、機能を実装。
+
+extendsは、読み込んだファイルを親として認識し、blockが一致するものを当てはめてtemplateを構成する。
+親１、子１の構成が限界らしく、extendsファイルでextendsすると親ファイルのみになる
+
+また、blockの中身は上書き形式
+
+base.html
+
 ```html
 {% load static %}
 <!DOCTYPE html>
@@ -45,6 +54,8 @@ static をロードする
 
 </html>
 ```
+
+content.html
 
 ```html
 {% extends "tasks/base.html" %}
