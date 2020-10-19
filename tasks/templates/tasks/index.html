@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="jp">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  {% if message %}
+  <p>{{message}}</p>
+  {% endif %}
+  {% if tasks %}
+
+  <ul>
+    {% for task in tasks %}<li>{{task}}</li>{% endfor %}
+  </ul>
+  {% else %}<p>データの登録が<span>hogera</span>ありません</p>{% endif %}
+
+</body>
+
+</html>
