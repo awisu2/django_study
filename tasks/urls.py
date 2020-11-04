@@ -7,5 +7,6 @@ app_name = "tasks"
 urlpatterns = [
     # path("", views.index, name="index"),
     path("", views.ListView.as_view(), name="index"),
-    path("<int:pk>", views.DetailView.as_view(), name="detail"),
+    path("", views.ListView.as_view(), name="task_list"),
+    path("<int:pk>", views.DetailView.as_view(), name="task_detail"),
 ]
