@@ -5,20 +5,10 @@ from django.views import View, generic
 from .models import Task, Note
 
 
-# class ListView(View):
-#     def get(self, request):
-#         # raise Http404("Question does not exist")
-#         tasks = Task.objects.order_by("-pub_date")[:5]
-#         template = loader.get_template("tasks/index.html")
-
-#         context = {"message": "hello world !", "tasks": tasks}
-#         return HttpResponse(template.render(context, request))
-
-
 class ListView(generic.ListView):
     model = Task
     # テンプレート名(default: `{model}_list.html`)
-    template_name = "tasks/index.html"
+    # template_name = "tasks/index.html"
     # テンプレートでのコンテキスト名(default: 'object_list')
     context_object_name = "rows"
     # ページング: `paginate_by={num}`
@@ -27,6 +17,7 @@ class ListView(generic.ListView):
     allow_empty = False
 
     def get_queryset(self):
+        # INFO: 結果が0の場合404になる
         return self.model.objects.all()
 
     # get_query_setの結果を取得し

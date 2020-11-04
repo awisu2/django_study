@@ -1,0 +1,20 @@
+[
+  {
+    "model": "tasks.task",
+    "pk": 1,
+    "fields": {
+      "choice_text": "foo bar",
+      "name": "task1",
+      "pub_date": "2020-11-04T00:00:00Z"
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 2,
+    "fields": {
+      "choice_text": "foo bar",
+      "name": "task2",
+      "pub_date": "2020-11-04T00:00:00Z"
+    }
+  }
+]
