@@ -1,8 +1,5 @@
-from django.http import HttpResponse, Http404
-from django.template import loader
-from django.views import View, generic
-
-from .models import Task, Note
+from django.views import generic
+from .models import Task
 
 
 class ListView(generic.ListView):
