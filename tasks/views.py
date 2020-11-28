@@ -14,7 +14,7 @@ class ListView(generic.ListView):
     # ページング: `paginate_by={num}`
     paginate_by = 100
     # get_querysetの結果データ無しでも正常フラグ(Falseでraise 404)
-    allow_empty = False
+    allow_empty = True
 
     def get_queryset(self):
         # INFO: 結果が0の場合404になる

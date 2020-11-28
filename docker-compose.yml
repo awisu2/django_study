@@ -1,0 +1,13 @@
+version: '3'
+services:
+  django_study:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    container_name: django_study
+    command: python manage.py runserver 0:8000
+    ports:
+      - 8000:8000
+    deploy:
+      restart_policy:
+        condition: none
